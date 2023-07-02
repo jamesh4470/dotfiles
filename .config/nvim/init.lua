@@ -25,6 +25,7 @@ return require('packer').startup(function(use)
     use {"lukas-reineke/indent-blankline.nvim"}
     use {"lewis6991/gitsigns.nvim"}
     use {"romgrk/barbar.nvim"}
+    use {"numToStr/Comment.nvim"}
 
     use {"neovim/nvim-lspconfig"}
     use {"hrsh7th/nvim-cmp"}
@@ -47,7 +48,7 @@ return require('packer').startup(function(use)
         open_mapping = [[<c-\>]],
         direction = "float",
         float_opts = {
-            border = "curved",
+            border = "curved"
         }
     })
 
@@ -67,12 +68,25 @@ return require('packer').startup(function(use)
         animations = true
     })
 
+    require("Comment").setup({
+        toggler = {
+            line = [[<C-_>]]
+        },
+        opleader = {
+            line = [[<C-_>]]
+        }
+    })
+
     local cmp = require("cmp")
     cmp.setup({
         snippet = {
             expand = function(args)
                 vim.fn["UltiSnips#Anon"](args.body)
             end
+        },
+        window = {
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered()
         },
         mapping = cmp.mapping.preset.insert({
             ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -84,9 +98,9 @@ return require('packer').startup(function(use)
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'ultisnips' }
-        },{
+        }, {
             { name = 'buffer' }
-	    })
+	})
     })
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
