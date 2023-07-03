@@ -57,7 +57,12 @@ return require('packer').startup(function(use)
     require("nvim-autopairs").setup()
 
     require("nvim-tree").setup({
-         vim.keymap.set("n", "<C-t>", require("nvim-tree.api").tree.toggle)
+        vim.keymap.set("n", "<C-t>", require("nvim-tree.api").tree.toggle),
+        renderer = {
+            indent_markers = {
+                enable = true
+            }
+        }
     })
 
     require("indent_blankline").setup({
@@ -100,7 +105,7 @@ return require('packer').startup(function(use)
             { name = 'ultisnips' }
         }, {
             { name = 'buffer' }
-	})
+	    })
     })
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
