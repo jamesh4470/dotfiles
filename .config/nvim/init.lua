@@ -1,4 +1,4 @@
-vim.g.loaded_netrw = 1
+im.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 vim.opt.tabstop = 4
@@ -25,7 +25,7 @@ require("lazy").setup({
     -- {
     --     "navarasu/onedark.nvim",
     --     config = function()
-    --         require("onedark").setup({style = "darker"})
+    --         require("onedark").setup({style = "cool"})
     --         require("onedark").load()
     --     end
     -- },
@@ -70,12 +70,12 @@ require("lazy").setup({
         opts = {}
     },
 
-    {
-        "romgrk/barbar.nvim",
-        opts = {
-            animations = true
-        }
-    },
+    -- {
+    --     "romgrk/barbar.nvim",
+    --     opts = {
+    --         animations = true
+    --     }
+    -- },
 
     {
         "numToStr/Comment.nvim",
@@ -90,8 +90,8 @@ require("lazy").setup({
     },
 
     {"andweeb/presence.nvim"},
-    {"nvim-tree/nvim-web-devicons"},
-    {"lewis6991/gitsigns.nvim"},
+    -- {"nvim-tree/nvim-web-devicons"},
+    -- {"lewis6991/gitsigns.nvim"},
 
     {"neovim/nvim-lspconfig"},
     {"hrsh7th/cmp-nvim-lsp"},
