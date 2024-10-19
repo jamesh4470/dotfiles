@@ -22,110 +22,71 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    -- {
+    --     "navarasu/onedark.nvim",
+    --     config = function()
+    --         require("onedark").setup({style = "darker"})
+    --         require("onedark").load()
+    --     end
+    -- },
     {
-        "navarasu/onedark.nvim",
+        "ellisonleao/gruvbox.nvim",
+        priority = 1000,
+        config = true,
+        opts = {},
         config = function()
-            require("onedark").setup({style = "darker"})
-            require("onedark").load()
+            vim.o.background = "dark" -- or "light" for light mode
+            vim.cmd([[colorscheme gruvbox]])
         end
     },
 
     {
         "nvim-lualine/lualine.nvim",
-        config = function()
-            require("lualine").setup()
-        end
+        opts = {}
     },
 
     {
         "nvim-treesitter/nvim-treesitter",
-        config = function()
-            require "nvim-treesitter.configs".setup({
-                highlight = {
-                    enable = true
-                }
-            })
-        end
-    },
-
-    {
-        "akinsho/toggleterm.nvim",
-        config = function()
-            require("toggleterm").setup({
-                open_mapping = [[<c-\>]],
-                direction = "float",
-                float_opts = {
-                    border = "curved"
-                }
-            })
-        end
+        opts = {
+            highlight = {
+                enable = true
+            }
+        }
     },
 
     {
         "williamboman/mason.nvim",
-        config = function()
-            require("mason").setup()
-        end
+        opts = {}
     },
 
     {
         "windwp/nvim-autopairs",
-        config = function()
-            require("nvim-autopairs").setup()
-        end
+        opts = {}
     },
-
-    {
-        "nvim-tree/nvim-tree.lua",
-        config = function()
-            require("nvim-tree").setup({
-                vim.keymap.set("n", "<C-t>", require("nvim-tree.api").tree.toggle),
-                renderer = {
-                    indent_markers = {
-                        enable = true
-                    }
-                }
-            })
-        end
-    },
-
+    
     {
         "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require("indent_blankline").setup({
-                show_current_context = true
-            })
-        end
+        main = "ibl",
+        opts = {}
     },
 
     {
         "romgrk/barbar.nvim",
-        config = function()
-            require("barbar").setup({
-                animations = true
-            })
-        end
+        opts = {
+            animations = true
+        }
     },
 
     {
         "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup({
-                toggler = {
-                    line = [[<C-_>]]
-                },
-                opleader = {
-                    line = [[<C-_>]]
-                }
-            })
-        end
-    },
-
-    {
-        "goolord/alpha-nvim",
-        config = function()
-            require("alpha").setup(require("alpha.themes.startify").config)
-        end
+        opts = {
+            toggler = {
+                line = [[<C-_>]]
+            },
+            opleader = {
+                line = [[<C-_>]]
+            }
+        }
     },
 
     {"andweeb/presence.nvim"},
@@ -160,22 +121,21 @@ require("lazy").setup({
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
-                    { name = 'ultisnips' }
-                }, {
-                    { name = 'buffer' }
+                    { name = 'ultisnips' },
+                    { name = 'buffer'}
                 })
             })
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-            require("lspconfig")["pyright"].setup {
-                capabilities = capabilities
-            }
             require("lspconfig")["clangd"].setup {
                 capabilities = capabilities
             }
-            require("lspconfig")["lua_ls"].setup {
-                capabilities = capabilities
-            }
+            -- require("lspconfig")["lua_ls"].setup {
+            --     capabilities = capabilities
+            -- }
+            -- require("lspconfig")["pyright"].setup {
+            --     capabilities = capabilities
+            -- }
         end
     }
 
