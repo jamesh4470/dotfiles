@@ -80,11 +80,11 @@ require("lazy").setup({
         "romgrk/barbar.nvim",
         opts = {},
         config = function()
-            vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
-            vim.keymap.set('n', '<C-h>', '<Cmd>BufferPrevious<CR>', opts)
-            vim.keymap.set('n', '<C-l>', '<Cmd>BufferNext<CR>', opts)
-            vim.keymap.set('n', '<C-j>', '<Cmd>BufferMovePrevious<CR>', opts)
-            vim.keymap.set('n', '<C-k>', '<Cmd>BufferMoveNext<CR>', opts)
+            vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', {})
+            vim.keymap.set('n', '<C-h>', '<Cmd>BufferPrevious<CR>', {})
+            vim.keymap.set('n', '<C-l>', '<Cmd>BufferNext<CR>', {})
+            vim.keymap.set('n', '<C-j>', '<Cmd>BufferMovePrevious<CR>', {})
+            vim.keymap.set('n', '<C-k>', '<Cmd>BufferMoveNext<CR>', {})
         end
     },
 
