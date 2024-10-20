@@ -1,12 +1,13 @@
-im.g.loaded_netrw = 1
+vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = "yes" 
 vim.bo.softtabstop = 4
 vim.wo.number = true
+vim.o.pumheight = 12;
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -22,13 +23,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    -- {
-    --     "navarasu/onedark.nvim",
-    --     config = function()
-    --         require("onedark").setup({style = "cool"})
-    --         require("onedark").load()
-    --     end
-    -- },
+    {
+        "navarasu/onedark.nvim",
+        -- config = function()
+        --     require("onedark").setup({style = "cool"})
+        --     require("onedark").load()
+        -- end
+    },
+
     {
         "ellisonleao/gruvbox.nvim",
         priority = 1000,
@@ -42,7 +44,11 @@ require("lazy").setup({
 
     {
         "nvim-lualine/lualine.nvim",
-        opts = {}
+        opts = {
+            options = {
+                theme = "gruvbox_dark"
+            }
+        }
     },
 
     {
@@ -70,12 +76,17 @@ require("lazy").setup({
         opts = {}
     },
 
-    -- {
-    --     "romgrk/barbar.nvim",
-    --     opts = {
-    --         animations = true
-    --     }
-    -- },
+    {
+        "romgrk/barbar.nvim",
+        opts = {},
+        config = function()
+            vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', opts)
+            vim.keymap.set('n', '<C-h>', '<Cmd>BufferPrevious<CR>', opts)
+            vim.keymap.set('n', '<C-l>', '<Cmd>BufferNext<CR>', opts)
+            vim.keymap.set('n', '<C-j>', '<Cmd>BufferMovePrevious<CR>', opts)
+            vim.keymap.set('n', '<C-k>', '<Cmd>BufferMoveNext<CR>', opts)
+        end
+    },
 
     {
         "numToStr/Comment.nvim",
@@ -90,8 +101,9 @@ require("lazy").setup({
     },
 
     {"andweeb/presence.nvim"},
-    -- {"nvim-tree/nvim-web-devicons"},
-    -- {"lewis6991/gitsigns.nvim"},
+
+    {"nvim-tree/nvim-web-devicons"},
+    {"lewis6991/gitsigns.nvim"},
 
     {"neovim/nvim-lspconfig"},
     {"hrsh7th/cmp-nvim-lsp"},
@@ -130,12 +142,18 @@ require("lazy").setup({
             require("lspconfig")["clangd"].setup {
                 capabilities = capabilities
             }
-            -- require("lspconfig")["lua_ls"].setup {
-            --     capabilities = capabilities
-            -- }
-            -- require("lspconfig")["pyright"].setup {
-            --     capabilities = capabilities
-            -- }
+        end
+    },
+
+    {
+        "nvim-telescope/telescope.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "BurntSushi/ripgrep"
+        },
+        config = function()
+            local builtin = require("telescope.builtin")
+            vim.keymap.set('n', '<C-t>', builtin.find_files, {desc = 'Telescope find files'})
         end
     }
 
