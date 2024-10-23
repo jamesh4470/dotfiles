@@ -1,13 +1,15 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.opt.termguicolors = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.bo.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.signcolumn = "yes" 
-vim.bo.softtabstop = 4
-vim.wo.number = true
+vim.opt.number = true
 vim.o.pumheight = 12;
+vim.opt.showmode = false;
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -77,14 +79,20 @@ require("lazy").setup({
     },
 
     {
-        "romgrk/barbar.nvim",
-        opts = {},
-        config = function()
-            vim.keymap.set('n', '<C-w>', '<Cmd>BufferClose<CR>', {})
-            vim.keymap.set('n', '<C-h>', '<Cmd>BufferPrevious<CR>', {})
-            vim.keymap.set('n', '<C-l>', '<Cmd>BufferNext<CR>', {})
-            vim.keymap.set('n', '<C-j>', '<Cmd>BufferMovePrevious<CR>', {})
-            vim.keymap.set('n', '<C-k>', '<Cmd>BufferMoveNext<CR>', {})
+        "akinsho/bufferline.nvim",
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        opts = {
+            options = {
+                separator_style = "slant",
+            }
+        },
+        config = function(_, opts)
+            require("bufferline").setup(opts)
+            vim.keymap.set('n', '<C-w>', '<Cmd>bd<CR>', {})
+            vim.keymap.set('n', '<C-h>', '<Cmd>BufferLineCyclePrev<CR>', {})
+            vim.keymap.set('n', '<C-l>', '<Cmd>BufferLineCycleNext<CR>', {})
+            vim.keymap.set('n', '<C-j>', '<Cmd>BufferLineMovePrev<CR>', {})
+            vim.keymap.set('n', '<C-k>', '<Cmd>BufferLineMoveNext<CR>', {})
         end
     },
 
@@ -107,8 +115,9 @@ require("lazy").setup({
 
     {"neovim/nvim-lspconfig"},
     {"hrsh7th/cmp-nvim-lsp"},
-    {"SirVer/ultisnips"},
-    {"quangnguyen30192/cmp-nvim-ultisnips"},
+    {'hrsh7th/cmp-buffer'},
+    {"L3MON4D3/LuaSnip"},
+    {"saadparwaiz1/cmp_luasnip"},
 
     {
         "hrsh7th/nvim-cmp",
@@ -117,7 +126,7 @@ require("lazy").setup({
             cmp.setup({
                 snippet = {
                     expand = function(args)
-                        vim.fn["UltiSnips#Anon"](args.body)
+                        require("luasnip").lsp_expand(args.body)
                     end
                 },
                 window = {
@@ -133,9 +142,8 @@ require("lazy").setup({
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
-                    { name = 'ultisnips' },
-                    { name = 'buffer'}
-                })
+                    { name = 'luasnip' },
+                }, { {name = "buffer" } })
             })
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
@@ -154,6 +162,7 @@ require("lazy").setup({
         config = function()
             local builtin = require("telescope.builtin")
             vim.keymap.set('n', '<C-t>', builtin.find_files, {desc = 'Telescope find files'})
+            vim.keymap.set('n', '<C-f>', builtin.current_buffer_fuzzy_find, {desc = 'Telescope search buffer'})
         end
     }
 
