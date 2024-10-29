@@ -5,7 +5,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.bo.softtabstop = 4
 vim.opt.expandtab = true
-vim.opt.signcolumn = "yes" 
+vim.opt.signcolumn = "yes"
 vim.opt.number = true
 vim.o.pumheight = 12;
 vim.opt.showmode = false;
@@ -35,12 +35,23 @@ require("lazy").setup({
 
     {
         "ellisonleao/gruvbox.nvim",
+        -- priority = 1000,
+        -- config = true,
+        -- opts = {},
+        -- config = function()
+        --     vim.o.background = "dark" -- or "light" for light mode
+        --     vim.cmd([[colorscheme gruvbox]])
+        -- end
+    },
+
+    {
+        "sainnhe/everforest",
         priority = 1000,
-        config = true,
         opts = {},
         config = function()
-            vim.o.background = "dark" -- or "light" for light mode
-            vim.cmd([[colorscheme gruvbox]])
+            vim.g.everforest_enable_italic = true
+            vim.g.everforest_background = 'medium'
+            vim.cmd.colorscheme('everforest')
         end
     },
 
@@ -48,7 +59,7 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         opts = {
             options = {
-                theme = "gruvbox_dark"
+                theme = "everforest"
             }
         }
     },
@@ -71,7 +82,7 @@ require("lazy").setup({
         "windwp/nvim-autopairs",
         opts = {}
     },
-    
+
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
