@@ -26,32 +26,13 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "navarasu/onedark.nvim",
-        -- config = function()
-        --     require("onedark").setup({style = "cool"})
-        --     require("onedark").load()
-        -- end
-    },
-
-    {
-        "ellisonleao/gruvbox.nvim",
-        -- priority = 1000,
-        -- config = true,
-        -- opts = {},
-        -- config = function()
-        --     vim.o.background = "dark" -- or "light" for light mode
-        --     vim.cmd([[colorscheme gruvbox]])
-        -- end
-    },
-
-    {
-        "sainnhe/everforest",
+        "sainnhe/sonokai",
         priority = 1000,
         opts = {},
         config = function()
-            vim.g.everforest_enable_italic = true
-            vim.g.everforest_background = 'medium'
-            vim.cmd.colorscheme('everforest')
+            vim.g.sonokai_style = "default"
+            vim.g.sonokai_enable_italic = true
+            vim.cmd.colorscheme("sonokai")
         end
     },
 
@@ -59,7 +40,7 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         opts = {
             options = {
-                theme = "everforest"
+                theme = "sonokai"
             }
         }
     },
