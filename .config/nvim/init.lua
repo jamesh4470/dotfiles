@@ -26,13 +26,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "sainnhe/sonokai",
+        "ellisonleao/gruvbox.nvim",
         priority = 1000,
         opts = {},
         config = function()
-            vim.g.sonokai_style = "default"
-            vim.g.sonokai_enable_italic = true
-            vim.cmd.colorscheme("sonokai")
+            vim.o.background = "dark"
+            vim.cmd([[colorscheme gruvbox]])
         end
     },
 
@@ -40,7 +39,7 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         opts = {
             options = {
-                theme = "sonokai"
+                theme = "gruvbox_dark"
             }
         }
     },
