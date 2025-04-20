@@ -3,13 +3,17 @@ vim.g.maplocalleader = " "
 vim.opt.termguicolors = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.bo.softtabstop = 4
+vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.signcolumn = "yes"
 vim.opt.number = true
-vim.o.pumheight = 12;
+vim.opt.pumheight = 12;
 vim.opt.showmode = false;
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+vim.diagnostic.config({
+    virtual_text = true
+})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -24,14 +28,20 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- opts = {x} is equivalent to require(plugin).setup({x})
+-- if vimscript is required for config, add a config function.
+-- opts will not call require() if config function is defined.
+-- pass in opts as config's second argument to use opts alongside config: config(_, opts)
+
 require("lazy").setup({
     {
-        "ellisonleao/gruvbox.nvim",
-        priority = 1000,
-        opts = {},
-        config = function()
-            vim.o.background = "dark"
-            vim.cmd([[colorscheme gruvbox]])
+        "navarasu/onedark.nvim",
+        opts = {
+            style = "deep"
+        },
+        config = function(_, opts)
+            require("onedark").setup(opts)
+            require("onedark").load()
         end
     },
 
@@ -39,7 +49,8 @@ require("lazy").setup({
         "nvim-lualine/lualine.nvim",
         opts = {
             options = {
-                theme = "gruvbox_dark"
+                theme = "onedark",
+                section_separators = {left = "", right = ""}
             }
         }
     },
@@ -79,11 +90,11 @@ require("lazy").setup({
         },
         config = function(_, opts)
             require("bufferline").setup(opts)
-            vim.keymap.set('n', '<C-w>', '<Cmd>bd<CR>', {})
-            vim.keymap.set('n', '<C-h>', '<Cmd>BufferLineCyclePrev<CR>', {})
-            vim.keymap.set('n', '<C-l>', '<Cmd>BufferLineCycleNext<CR>', {})
-            vim.keymap.set('n', '<C-j>', '<Cmd>BufferLineMovePrev<CR>', {})
-            vim.keymap.set('n', '<C-k>', '<Cmd>BufferLineMoveNext<CR>', {})
+            vim.keymap.set('n', '<M-w>', '<Cmd>bd<CR>', {})
+            vim.keymap.set('n', '<M-h>', '<Cmd>BufferLineCyclePrev<CR>', {})
+            vim.keymap.set('n', '<M-l>', '<Cmd>BufferLineCycleNext<CR>', {})
+            vim.keymap.set('n', '<M-j>', '<Cmd>BufferLineMovePrev<CR>', {})
+            vim.keymap.set('n', '<M-k>', '<Cmd>BufferLineMoveNext<CR>', {})
         end
     },
 
@@ -132,7 +143,7 @@ require("lazy").setup({
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'luasnip' },
-                }, { {name = "buffer" } })
+                }, {{name = "buffer"}})
             })
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
             -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
