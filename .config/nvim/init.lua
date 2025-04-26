@@ -10,6 +10,7 @@ vim.opt.number = true
 vim.opt.pumheight = 12;
 vim.opt.showmode = false;
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 
 vim.diagnostic.config({
     virtual_text = true
@@ -105,10 +106,10 @@ require("lazy").setup({
         "numToStr/Comment.nvim",
         opts = {
             toggler = {
-                line = [[<C-_>]]
+                line = "<C-_>"
             },
             opleader = {
-                line = [[<C-_>]]
+                line = "<C-_>"
             }
         }
     },
@@ -118,6 +119,15 @@ require("lazy").setup({
         config = function()
             require("rainbow-delimiters.setup").setup()
         end
+    },
+
+    {
+        "akinsho/toggleterm.nvim",
+        opts = {
+            open_mapping = [[<c-\>]],
+            direction = "vertical",
+            size = 75,
+        },
     },
 
     {"nvim-tree/nvim-web-devicons"},
