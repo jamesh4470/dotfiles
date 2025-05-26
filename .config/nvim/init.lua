@@ -9,8 +9,12 @@ vim.opt.signcolumn = "yes"
 vim.opt.number = true
 vim.opt.pumheight = 12;
 vim.opt.showmode = false;
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', [[<cmd>nohlsearch<CR>]])
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+vim.keymap.set('n', '<C-w><Left>', [[<cmd>vertical resize -5<CR>]])
+vim.keymap.set('n', '<C-w><Right>', [[<cmd>vertical resize +5<CR>]])
+vim.keymap.set('n', '<C-w><Up>', [[<cmd>resize +5<CR>]])
+vim.keymap.set('n', '<C-w><Down>', [[<cmd>resize -5<CR>]])
 
 vim.diagnostic.config({
     virtual_text = true
@@ -38,7 +42,7 @@ require("lazy").setup({
     {
         "navarasu/onedark.nvim",
         opts = {
-            style = "deep"
+            style = "dark"
         },
         config = function(_, opts)
             require("onedark").setup(opts)
@@ -156,6 +160,8 @@ require("lazy").setup({
                 mapping = cmp.mapping.preset.insert({
                     ['<M-[>'] = cmp.mapping.scroll_docs(-4),
                     ['<M-]>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-j>'] = cmp.mapping.select_next_item(),
+                    ['<C-k>'] = cmp.mapping.select_prev_item(),
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.abort(),
                     ['<Tab>'] = cmp.mapping.confirm({select = true})
@@ -165,13 +171,17 @@ require("lazy").setup({
                     { name = 'luasnip' },
                 }, {{name = "buffer"}})
             })
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local default_capabilities = require('cmp_nvim_lsp').default_capabilities()
             require("lspconfig")["clangd"].setup({
-                capabilities = capabilities
+                capabilities = default_capabilities,
             })
             -- require("lspconfig")["lua_ls"].setup({
-            --     capabilities = capabilities
+            --     capabilities = default_capabilities
             -- })
+            require("lspconfig")["rust_analyzer"].setup({
+                capabilities = default_capabilities,
+                settings = {["rust-analyzer"] = {}},
+            })
         end
     },
 
