@@ -134,6 +134,11 @@ require("lazy").setup({
         },
     },
 
+    {
+        "folke/which-key.nvim",
+        opts = {},
+    },
+
     {"nvim-tree/nvim-web-devicons"},
     {"lewis6991/gitsigns.nvim"},
 
@@ -176,7 +181,7 @@ require("lazy").setup({
                 capabilities = default_capabilities,
             })
             -- require("lspconfig")["lua_ls"].setup({
-            --     capabilities = default_capabilities
+                -- capabilities = default_capabilities
             -- })
             require("lspconfig")["rust_analyzer"].setup({
                 capabilities = default_capabilities,
