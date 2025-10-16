@@ -176,17 +176,13 @@ require("lazy").setup({
                     { name = 'luasnip' },
                 }, {{name = "buffer"}})
             })
-            local default_capabilities = require('cmp_nvim_lsp').default_capabilities()
-            require("lspconfig")["clangd"].setup({
-                capabilities = default_capabilities,
-            })
-            -- require("lspconfig")["lua_ls"].setup({
-                -- capabilities = default_capabilities
-            -- })
-            require("lspconfig")["rust_analyzer"].setup({
-                capabilities = default_capabilities,
+            vim.lsp.config.clangd = {}
+            vim.lsp.config.lua_ls = {}
+            vim.lsp.config.rust_analyzer = {
                 settings = {["rust-analyzer"] = {}},
-            })
+            }
+            vim.lsp.config.jdtls = {}
+            vim.lsp.enable({"clangd", "rust_analyzer", "jdtls"})
         end
     },
 
