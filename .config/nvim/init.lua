@@ -83,9 +83,33 @@ require("lazy").setup({
     },
 
     {
+        "HiPhish/rainbow-delimiters.nvim",
+        config = function()
+            require("rainbow-delimiters.setup").setup()
+        end
+    },
+
+    {
         "lukas-reineke/indent-blankline.nvim",
-        main = "ibl",
-        opts = {}
+        dependencies = {"HiPhish/rainbow-delimiters.nvim"},
+        opts = {},
+        config = function(_, opts)
+            local highlight = {
+                "RainbowDelimiterViolet",
+                "RainbowDelimiterBlue",
+                "RainbowDelimiterCyan",
+                "RainbowDelimiterGreen",
+                "RainbowDelimiterYellow",
+                "RainbowDelimiterOrange",
+                "RainbowDelimiterRed",
+            }
+            require("ibl").setup({
+                indent = {
+                    char = "▏";
+                    highlight = highlight
+                }
+            })
+        end
     },
 
     {
@@ -116,13 +140,6 @@ require("lazy").setup({
                 line = "<C-_>"
             }
         }
-    },
-
-    {
-        "HiPhish/rainbow-delimiters.nvim",
-        config = function()
-            require("rainbow-delimiters.setup").setup()
-        end
     },
 
     {
