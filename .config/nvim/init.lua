@@ -42,7 +42,7 @@ require("lazy").setup({
     {
         "navarasu/onedark.nvim",
         opts = {
-            style = "dark"
+            style = "darker"
         },
         config = function(_, opts)
             require("onedark").setup(opts)
@@ -52,12 +52,7 @@ require("lazy").setup({
 
     {
         "nvim-lualine/lualine.nvim",
-        opts = {
-            options = {
-                theme = "onedark",
-                section_separators = {left = "", right = ""}
-            }
-        }
+        opts = {}
     },
 
     {
@@ -84,8 +79,19 @@ require("lazy").setup({
 
     {
         "HiPhish/rainbow-delimiters.nvim",
-        config = function()
-            require("rainbow-delimiters.setup").setup()
+        opts = {
+            highlight = {
+                "RainbowDelimiterViolet",
+                "RainbowDelimiterBlue",
+                "RainbowDelimiterCyan",
+                "RainbowDelimiterGreen",
+                "RainbowDelimiterYellow",
+                "RainbowDelimiterOrange",
+                "RainbowDelimiterRed",
+            }
+        },
+        config = function(_, opts)
+            require("rainbow-delimiters.setup").setup(opts)
         end
     },
 
@@ -160,6 +166,7 @@ require("lazy").setup({
     {"lewis6991/gitsigns.nvim"},
 
     {"neovim/nvim-lspconfig"},
+
     {"hrsh7th/cmp-nvim-lsp"},
     {'hrsh7th/cmp-buffer'},
     {"L3MON4D3/LuaSnip"},
@@ -195,11 +202,10 @@ require("lazy").setup({
             })
             vim.lsp.config.clangd = {}
             vim.lsp.config.lua_ls = {}
-            vim.lsp.config.rust_analyzer = {
-                settings = {["rust-analyzer"] = {}},
-            }
+            vim.lsp.config.rust_analyzer = {}
+            vim.lsp.config.pyright = {}
             vim.lsp.config.jdtls = {}
-            vim.lsp.enable({"clangd", "rust_analyzer", "jdtls"})
+            vim.lsp.enable({"clangd", "rust_analyzer", "jdtls", "pyright"})
         end
     },
 
