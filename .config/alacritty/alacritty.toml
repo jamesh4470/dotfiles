@@ -39,7 +39,7 @@ style = "Italic"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font"
-style = "Normal"
+style = "Medium"
 
 [window]
 opacity = 1
