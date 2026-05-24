@@ -101,7 +101,6 @@ require("Comment").setup({
     opleader = {line = "<C-_>"},
 })
 
-
 require("toggleterm").setup({
     open_mapping = [[<c-\>]],
     direction = "vertical",
