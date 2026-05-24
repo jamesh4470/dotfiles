@@ -20,206 +20,131 @@ vim.diagnostic.config({
     virtual_text = true
 })
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
+vim.pack.add({
+    "https://github.com/navarasu/onedark.nvim",
 
--- opts = {x} is equivalent to require(plugin).setup({x})
--- if vimscript is required for config, add a config function.
--- opts will not call require() if config function is defined.
--- pass in opts as config's second argument to use opts alongside config: config(_, opts)
+    "https://github.com/nvim-lualine/lualine.nvim",
+    "https://github.com/nvim-tree/nvim-web-devicons",
+    "https://github.com/lewis6991/gitsigns.nvim",
 
-require("lazy").setup({
-    {
-        "navarasu/onedark.nvim",
-        opts = {
-            style = "darker"
-        },
-        config = function(_, opts)
-            require("onedark").setup(opts)
-            require("onedark").load()
-        end
-    },
+    "https://github.com/akinsho/bufferline.nvim",
+    "https://github.com/windwp/nvim-autopairs",
+    "https://github.com/folke/which-key.nvim",
+    "https://github.com/numToStr/Comment.nvim",
+    "https://github.com/akinsho/toggleterm.nvim",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/HiPhish/rainbow-delimiters.nvim",
+    "https://github.com/lukas-reineke/indent-blankline.nvim",
+    "https://github.com/williamboman/mason.nvim",
 
-    {
-        "nvim-lualine/lualine.nvim",
-        opts = {}
-    },
+    "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/hrsh7th/cmp-buffer",
+    "https://github.com/L3MON4D3/LuaSnip",
+    "https://github.com/saadparwaiz1/cmp_luasnip",
+    "https://github.com/hrsh7th/nvim-cmp",
 
-    {
-        "nvim-treesitter/nvim-treesitter",
-        opts = {
-            highlight = {
-                enable = true
-            }
-        },
-        config = function(_, opts)
-            require("nvim-treesitter.configs").setup(opts)
-        end
-    },
-
-    {
-        "williamboman/mason.nvim",
-        opts = {}
-    },
-
-    {
-        "windwp/nvim-autopairs",
-        opts = {}
-    },
-
-    {
-        "HiPhish/rainbow-delimiters.nvim",
-        opts = {
-            highlight = {
-                "RainbowDelimiterViolet",
-                "RainbowDelimiterBlue",
-                "RainbowDelimiterCyan",
-                "RainbowDelimiterGreen",
-                "RainbowDelimiterYellow",
-                "RainbowDelimiterOrange",
-                "RainbowDelimiterRed",
-            }
-        },
-        config = function(_, opts)
-            require("rainbow-delimiters.setup").setup(opts)
-        end
-    },
-
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        dependencies = {"HiPhish/rainbow-delimiters.nvim"},
-        opts = {},
-        config = function(_, opts)
-            local highlight = {
-                "RainbowDelimiterViolet",
-                "RainbowDelimiterBlue",
-                "RainbowDelimiterCyan",
-                "RainbowDelimiterGreen",
-                "RainbowDelimiterYellow",
-                "RainbowDelimiterOrange",
-                "RainbowDelimiterRed",
-            }
-            require("ibl").setup({
-                indent = {
-                    char = "▏";
-                    highlight = highlight
-                }
-            })
-        end
-    },
-
-    {
-        "akinsho/bufferline.nvim",
-        dependencies = {"nvim-tree/nvim-web-devicons"},
-        opts = {
-            options = {
-                separator_style = "slant",
-            }
-        },
-        config = function(_, opts)
-            require("bufferline").setup(opts)
-            vim.keymap.set('n', '<M-w>', '<Cmd>bd<CR>', {})
-            vim.keymap.set('n', '<M-h>', '<Cmd>BufferLineCyclePrev<CR>', {})
-            vim.keymap.set('n', '<M-l>', '<Cmd>BufferLineCycleNext<CR>', {})
-            vim.keymap.set('n', '<M-j>', '<Cmd>BufferLineMovePrev<CR>', {})
-            vim.keymap.set('n', '<M-k>', '<Cmd>BufferLineMoveNext<CR>', {})
-        end
-    },
-
-    {
-        "numToStr/Comment.nvim",
-        opts = {
-            toggler = {
-                line = "<C-_>"
-            },
-            opleader = {
-                line = "<C-_>"
-            }
-        }
-    },
-
-    {
-        "akinsho/toggleterm.nvim",
-        opts = {
-            open_mapping = [[<c-\>]],
-            direction = "vertical",
-            size = 75,
-        },
-    },
-
-    {
-        "folke/which-key.nvim",
-        opts = {},
-    },
-
-    {"nvim-tree/nvim-web-devicons"},
-    {"lewis6991/gitsigns.nvim"},
-
-    {"neovim/nvim-lspconfig"},
-
-    {"hrsh7th/cmp-nvim-lsp"},
-    {'hrsh7th/cmp-buffer'},
-    {"L3MON4D3/LuaSnip"},
-    {"saadparwaiz1/cmp_luasnip"},
-
-    {
-        "hrsh7th/nvim-cmp",
-        config = function()
-            local cmp = require("cmp")
-            cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
-                    end
-                },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered()
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<M-[>'] = cmp.mapping.scroll_docs(-4),
-                    ['<M-]>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-j>'] = cmp.mapping.select_next_item(),
-                    ['<C-k>'] = cmp.mapping.select_prev_item(),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<Tab>'] = cmp.mapping.confirm({select = true})
-                }),
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                }, {{name = "buffer"}})
-            })
-            vim.lsp.config.clangd = {}
-            vim.lsp.config.lua_ls = {}
-            vim.lsp.config.rust_analyzer = {}
-            vim.lsp.config.pyright = {}
-            vim.lsp.config.jdtls = {}
-            vim.lsp.enable({"clangd", "rust_analyzer", "jdtls", "pyright"})
-        end
-    },
-
-    {
-        "nvim-telescope/telescope.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "BurntSushi/ripgrep"
-        },
-        config = function()
-            local builtin = require("telescope.builtin")
-            vim.keymap.set('n', '<C-t>', builtin.find_files, {desc = 'Telescope find files'})
-            vim.keymap.set('n', '<C-f>', builtin.current_buffer_fuzzy_find, {desc = 'Telescope search buffer'})
-        end
-    },
-
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/BurntSushi/ripgrep",
+    "https://github.com/nvim-telescope/telescope.nvim",
 })
+
+require("onedark").setup({style = "darker"})
+require("onedark").load()
+
+require("lualine").setup({})
+
+-- install tree-sitter-cli via package manager
+require("nvim-treesitter").setup({
+    highlight = {
+        enable = true
+    }
+})
+require("nvim-treesitter").install({"python", "rust", "c", "cpp"})
+
+require("mason").setup({})
+
+require("nvim-autopairs").setup({})
+
+require("rainbow-delimiters.setup").setup({
+    highlight = {
+        "RainbowDelimiterViolet", "RainbowDelimiterBlue",
+        "RainbowDelimiterCyan",   "RainbowDelimiterGreen",
+        "RainbowDelimiterYellow", "RainbowDelimiterOrange",
+        "RainbowDelimiterRed",
+    }
+})
+
+local ibl_hl = {
+    "RainbowDelimiterViolet", "RainbowDelimiterBlue",
+    "RainbowDelimiterCyan",   "RainbowDelimiterGreen",
+    "RainbowDelimiterYellow", "RainbowDelimiterOrange",
+    "RainbowDelimiterRed",
+}
+require("ibl").setup({
+    indent = {char = "▏", highlight = ibl_hl}
+})
+
+require("bufferline").setup({
+    options = {
+        separator_style = "slant",
+    }
+})
+vim.keymap.set('n', '<M-w>', '<Cmd>bd<CR>', {})
+vim.keymap.set('n', '<M-h>', '<Cmd>BufferLineCyclePrev<CR>', {})
+vim.keymap.set('n', '<M-l>', '<Cmd>BufferLineCycleNext<CR>', {})
+vim.keymap.set('n', '<M-j>', '<Cmd>BufferLineMovePrev<CR>', {})
+vim.keymap.set('n', '<M-k>', '<Cmd>BufferLineMoveNext<CR>', {})
+
+require("Comment").setup({
+    toggler  = {line = "<C-_>"},
+    opleader = {line = "<C-_>"},
+})
+
+
+require("toggleterm").setup({
+    open_mapping = [[<c-\>]],
+    direction = "vertical",
+    size = 75,
+})
+
+require("which-key").setup({})
+
+require("gitsigns").setup({})
+
+local cmp = require("cmp")
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<M-[>'] = cmp.mapping.scroll_docs(-4),
+        ['<M-]>'] = cmp.mapping.scroll_docs(4),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = cmp.config.sources(
+        { { name = 'nvim_lsp' }, { name = 'luasnip' } },
+        { { name = 'buffer' } }
+    )
+})
+
+vim.lsp.config.clangd = {}
+vim.lsp.config.lua_ls = {}
+vim.lsp.config.rust_analyzer = {}
+vim.lsp.config.pyright = {}
+vim.lsp.config.jdtls = {}
+vim.lsp.enable({"clangd", "rust_analyzer", "jdtls", "pyright"})
+
+local builtin = require("telescope.builtin")
+vim.keymap.set('n', '<C-t>', builtin.find_files, {desc = 'Telescope find files'})
+vim.keymap.set('n', '<C-f>', builtin.current_buffer_fuzzy_find, {desc = 'Telescope search buffer'})
