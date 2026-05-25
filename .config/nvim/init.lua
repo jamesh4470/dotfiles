@@ -55,12 +55,12 @@ require("onedark").load()
 require("lualine").setup({})
 
 -- install tree-sitter-cli via package manager
-require("nvim-treesitter").setup({
-    highlight = {
-        enable = true
-    }
+local languages = {"python", "rust", "c", "cpp"}
+require("nvim-treesitter").install(languages)
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = languages,
+    callback = function() vim.treesitter.start() end,
 })
-require("nvim-treesitter").install({"python", "rust", "c", "cpp"})
 
 require("mason").setup({})
 
