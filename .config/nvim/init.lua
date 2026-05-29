@@ -17,7 +17,8 @@ vim.keymap.set('n', '<C-w><Up>', [[<cmd>resize +5<CR>]])
 vim.keymap.set('n', '<C-w><Down>', [[<cmd>resize -5<CR>]])
 
 vim.diagnostic.config({
-    virtual_text = true
+    virtual_text = true,
+    update_in_insert = true
 })
 
 vim.pack.add({
