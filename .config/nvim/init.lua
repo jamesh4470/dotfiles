@@ -1,14 +1,15 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.opt.termguicolors = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.signcolumn = "yes"
 vim.opt.number = true
-vim.opt.pumheight = 12;
-vim.opt.showmode = false;
+vim.opt.pumheight = 12
+vim.opt.showmode = false
+vim.opt.breakindent = true
+vim.loader.enable()
 vim.keymap.set('n', '<Esc>', [[<cmd>nohlsearch<CR>]])
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 vim.keymap.set('n', '<C-w><Left>', [[<cmd>vertical resize -5<CR>]])
@@ -50,7 +51,7 @@ vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
 })
 
-require("onedark").setup({style = "darker"})
+require("onedark").setup({style = "dark"})
 require("onedark").load()
 
 require("lualine").setup({})
@@ -67,23 +68,18 @@ require("mason").setup({})
 
 require("nvim-autopairs").setup({})
 
-require("rainbow-delimiters.setup").setup({
-    highlight = {
-        "RainbowDelimiterViolet", "RainbowDelimiterBlue",
-        "RainbowDelimiterCyan",   "RainbowDelimiterGreen",
-        "RainbowDelimiterYellow", "RainbowDelimiterOrange",
-        "RainbowDelimiterRed",
-    }
-})
-
-local ibl_hl = {
+local highlight_groups = {
     "RainbowDelimiterViolet", "RainbowDelimiterBlue",
     "RainbowDelimiterCyan",   "RainbowDelimiterGreen",
     "RainbowDelimiterYellow", "RainbowDelimiterOrange",
     "RainbowDelimiterRed",
 }
+require("rainbow-delimiters.setup").setup({
+    highlight = highlight_groups
+})
+
 require("ibl").setup({
-    indent = {char = "▏", highlight = ibl_hl}
+    indent = {char = "▏", highlight = highlight_groups}
 })
 
 require("bufferline").setup({
@@ -120,8 +116,8 @@ cmp.setup({
         end
     },
     window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered({border="rounded"}),
+        documentation = cmp.config.window.bordered({border="rounded"}),
     },
     mapping = cmp.mapping.preset.insert({
         ['<M-[>'] = cmp.mapping.scroll_docs(-4),
