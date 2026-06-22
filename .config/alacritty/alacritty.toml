@@ -1,56 +1,35 @@
-[colors.normal]
-black = '0x1e2127'
-red = '0xe06c75'
-green = '0x98c379'
-yellow = '0xd19a66'
-blue = '0x61afef'
-magenta = '0xc678dd'
-cyan = '0x56b6c2'
-white = '0x828791'
+[colors]
+primary = {background = '#282c34', foreground = '#abb2bf'}
+normal = {
+    black = '#1e2127',
+    red = '#e06c75',
+    green = '#98c379',
+    yellow = '#d19a66',
+    blue = '#61afef',
+    magenta = '#c678dd',
+    cyan = '#56b6c2',
+    white = '#abb2bf'
+}
 
-[colors.bright]
-black = '0x5c6370'
-red = '0xe06c75'
-green = '0x98c379'
-yellow = '0xd19a66'
-blue = '0x61afef'
-magenta = '0xc678dd'
-cyan = '0x56b6c2'
-white = '0x828791'
-
-[colors.primary]
-background = '0x1e2127'
-foreground = '0xabb2bf'
+bright = {
+    black = '#5c6370',
+    red = '#e06c75',
+    green = '#98c379',
+    yellow = '#d19a66',
+    blue = '#61afef',
+    magenta = '#c678dd',
+    cyan = '#56b6c2',
+    white = '#ffffff'
+}
 
 [font]
 size = 12
-
-[font.bold]
-family = "JetBrainsMono Nerd Font"
-style = "Bold"
-
-[font.bold_italic]
-family = "JetBrainsMono Nerd Font"
-style = "Bold Italic"
-
-[font.italic]
-family = "JetBrainsMono Nerd Font"
-style = "Italic"
-
-[font.normal]
-family = "JetBrainsMono Nerd Font"
-style = "Medium"
+normal = {family = "JetBrainsMono Nerd Font", style = "Medium"}
+bold = {family = "JetBrainsMono Nerd Font", style = "Bold"}
+italic = {family = "JetBrainsMono Nerd Font", style = "Italic"}
+bold_italic = {family = "JetBrainsMono Nerd Font", style = "Bold Italic"}
 
 [window]
+dimensions = {columns = 95, lines = 25}
+padding = {x = 15, y = 15}
 opacity = 1
-
-[window.dimensions]
-columns = 95
-lines = 25
-
-[window.padding]
-x = 15
-y = 15
-
-[selection]
-save_to_clipboard = true
